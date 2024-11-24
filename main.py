@@ -29,10 +29,10 @@ async def handle_task(update: Update, context) -> None:
     # First reminder is after 1 day
     if DEBUG:
         interval_days = 0
-        next_reminder = datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=interval_days+1)
+        next_reminder = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=interval_days+1)
     else:
         interval_days = SPACED_INTERVALS[0]
-        next_reminder = datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=interval_days)
+        next_reminder = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=interval_days)
     print("next reminder:", next_reminder)
 
     # Save task to the database using SQLiteManager
@@ -101,9 +101,9 @@ async def button(update: Update, context) -> None:
 
         # Schedule the next reminder
         if DEBUG:
-            new_reminder_time = datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=next_interval_days+1)
+            new_reminder_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=next_interval_days+1)
         else:
-            new_reminder_time = datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=next_interval_days)
+            new_reminder_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=next_interval_days)
         db.update_task(task_id, next_interval_days, new_reminder_time)
 
         await query.edit_message_text(text=f"Got it! I'll remind you again in {next_interval_days} day(s).")
@@ -112,9 +112,9 @@ async def button(update: Update, context) -> None:
 
         # Schedule the next reminder
         if DEBUG:
-            new_reminder_time = datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=current_interval+1)
+            new_reminder_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=current_interval+1)
         else:
-            new_reminder_time = datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=current_interval)
+            new_reminder_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=current_interval)
         db.update_task(task_id, current_interval, new_reminder_time)
 
         await query.edit_message_text(text=f"Got it! I'll remind you again in {current_interval} day(s).")
