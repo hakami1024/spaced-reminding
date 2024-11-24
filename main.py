@@ -38,7 +38,7 @@ async def handle_task(update: Update, context) -> None:
     # Save task to the database using SQLiteManager
     db.add_task(user_id, chat_id, task, interval_days, next_reminder)
 
-    await update.message.reply_text(f"Task '{task}' added! \nI'll remind you in {interval_days} day(s).")
+    await update.message.reply_text(f"Task '{task}' added! \nI'll remind you in {interval_days} day.")
 
 
 # Send reminder with options to reschedule or stop
